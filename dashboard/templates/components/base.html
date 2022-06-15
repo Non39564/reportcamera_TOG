@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="icon" type="image/png" href="https://cdn0.iconfinder.com/data/icons/octicons/1024/dashboard-512.png"/>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>{% block tital%} {% endblock %}Dashboard</title>
@@ -16,6 +17,12 @@
 
     <!-- Custom styles for this template-->
     <link href="{% static 'dashboard/css/sb-admin-2.min.css' %}" rel="stylesheet">
+
+    <!-- Edit -->
+    {% comment %} <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'dashboard/css/edit.css' %}">
+    <!-- Custom styles for this page -->
+    <link href="{% static 'dashboard/vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
   </head>
   <body id="page-top">
     <!-- Page Wrapper -->
@@ -29,61 +36,13 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                        <i class="fa fa-bars"></i>
-                    </button>
-
-                    <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
-                    <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                                aria-labelledby="searchDropdown">
-                                <form class="form-inline mr-auto w-100 navbar-search">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
-                                            placeholder="Search for..." aria-label="Search"
-                                            aria-describedby="basic-addon2">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-
-                    </ul>
-
                 </nav>
                 <!-- End of Topbar -->
                 {% block content%} {% endblock %}
             </div>
         </div>
     </div>
+    {% include 'components/footer.html' %}
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'dashboard/vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
@@ -96,10 +55,15 @@
 
     <!-- Page level plugins -->
     <script src="{% static 'dashboard/vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'dashboard/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
 
     <!-- Page level custom scripts -->
-    <script src="{% static 'dashboard/js/demo/chart-area-demo.js' %}"></script>
-    <script src="{% static 'dashboard/js/demo/chart-pie-demo.js' %}"></script>
-    {% include 'components/footer.html' %}
+    <script src="{% static 'dashboard/js/datatables-demo.js' %}"></script>
+
+    <!-- Edit -->
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script  src="{% static 'dashboard/js/edit.js' %}"></script>
+
   </body>
 </html>

@@ -1,13 +1,7 @@
-
 {% extends 'components/base.html' %}
-
 {% block content %}
-<!-- Live Camera -->
-    {% include 'components/liveCam.html' %}
-<!-- End Live Camera -->
-<!-- Data_Table -->
-<div>
+<!-- Chart Data -->
+    {% include 'components/datachart.html' %}
+<!-- Table Data -->
     {% include 'components/datatable.html' %}
-</div>
-<!-- End_Data_Table -->
 {% endblock %}

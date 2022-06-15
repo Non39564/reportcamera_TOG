@@ -1,14 +1,9 @@
 {% load static %}
-<div id="content">
+<!-- Data_Table -->
+<div>
+    <div id="content">
     <!-- Begin Page Content -->
     <div class="container-fluid">
-
-        <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-            For more information about DataTables, please visit the <a target="_blank"
-                href="https://datatables.net">official DataTables documentation</a>.</p>
-
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -16,43 +11,48 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
+                    <!-- Topbar Search -->
+                    <div>
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for name"
+                                    aria-label="Search" aria-describedby="basic-addon2" id="searchname" onkeyup="Search()">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br>
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    {% if data %}
                         <thead>
                             <tr>
+                                <th>Company</th>
                                 <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>Date</th>
+                                <th>Time_In</th>
+                                <th>Time_Out</th>
                             </tr>
                         </thead>
                         <tbody>
+                            
+                            {% for data in data%}
                             <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
+                                <td>{{data.Company}}</td>
+                                <td>{{data.name}}</td>
+                                <td>{{data.date}}</td>
+                                <td>{{data.time_in}}</td>
+                                <td>{{data.time_out}}</td>
                             </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                                <td>63</td>
-                                <td>2011/07/25</td>
-                                <td>$170,750</td>
-                            </tr>
-                            <tr>
-                                <td>Ashton Cox</td>
-                                <td>Junior Technical Author</td>
-                                <td>San Francisco</td>
-                                <td>66</td>
-                                <td>2009/01/12</td>
-                                <td>$86,000</td>
-                            </tr>
+                            {% endfor %}
+                            
                         </tbody>
+                        {% else %}
+                            <p>ไม่ข้อมูลที่จะแสดง</p>
+                            {% endif %}
                     </table>
                 </div>
             </div>
@@ -63,3 +63,28 @@
 
 </div>
 <!-- End of Main Content -->
+<!-- Search script -->
+<script>
+    function Search() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("searchname");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("dataTable");
+      tr = table.getElementsByTagName("tr");
+    
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+</script>
+</div>

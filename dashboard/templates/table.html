@@ -3,6 +3,238 @@
 {% block content %}
 <!-- Data_Table -->
 <div>
-    {% include 'components/datatable.html' %}
+    <div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+            For more information about DataTables, please visit the <a target="_blank"
+                href="https://datatables.net">official DataTables documentation</a>.</p>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <!-- Topbar Search -->
+                    <div>
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for name"
+                                    aria-label="Search" aria-describedby="basic-addon2" id="searchname" onkeyup="Search()">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <hr>
+                        <div class="input-group">
+                            <input id="dateStart" type="date" >
+                            <input id="dateEnd" type="date" >
+                            <button id="doIt" class="btn btn-primary">
+                                <i class="fas fa-search fa-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <br>
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    {% if data %}
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Time_In</th>
+                                <th>Time_Out</th>
+                                <th colspan="2">Action</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for data in data%}
+                            <tr>
+                                <td>{{data.Company}}</td>
+                                <td>{{data.name}}</td>
+                                <td>{{data.date}}</td>
+                                <td>{{data.time_in}}</td>
+                                <td>{{data.time_out}}</td>
+                                <td>   
+                                    <form action="/Edit" method="post">
+                                    {% csrf_token %}
+                                        <input type="hidden" name="id" value="{{data.id}}">
+                                        <input type="hidden" name="name" value="{{data.name}}">
+                                        <button class="btn btn-primary" type="submit" >Edit</button>
+                                    </form>
+                                  </td>
+                                  <td>
+
+                                    <form action="/delete" method="post">
+                                    {% csrf_token %}
+                                        <input type="hidden" name="id" value="{{data.id}}">
+                                        <input type="hidden" name="name" value="{{data.name}}">
+                                        <button type="submit" class="btn btn-danger" >Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                        {% else %}
+                            <p>ไม่ข้อมูลที่จะแสดง</p>
+                            {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+<!-- Search script -->
+<script>
+    function Search() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("searchname");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("dataTable");
+      tr = table.getElementsByTagName("tr");
+    
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
+      }
+    }
+</script>
+<!-- Date Search script -->
+<script>
+    doIt.onclick = () => {
+
+        var startDate = dateStart.value,
+              endDate = dateEnd.value;
+        sortThroughTable(startDate, endDate)
+       
+      };
+      
+      function sortThroughTable(start, end) {
+        Array.apply(0, dataTable.rows).forEach(x => {
+          var cells = Array.apply(0, x.cells);
+          var secondCell = cells[2].innerText;
+          var isHidden = shouldItBeHidden(
+            secondCell,
+            start, end
+          );
+          if(isHidden) {
+            x.style.display = "none"
+          } else if(x.style.display == "none")
+            x.style.display = "";
+        })
+        
+        function shouldItBeHidden(
+          cellTxt,
+          start,
+          end
+        ) {
+          var parsedCell = myParse(cellTxt),
+              parsedStart = myParse(start),
+              parsedEnd = myParse(end);
+          return !(
+          //here's where the real logic is
+            parsedCell ? 
+              (parsedStart && parsedEnd) ?
+                isDateGreaterOrEqual(parsedCell, parsedStart) &&
+                isDateGreaterOrEqual(parsedEnd, parsedCell)
+              : 
+                parsedStart &&
+                  cellTxt == start
+            : false
+            
+          )
+      
+        }
+        
+        function isDateGreaterOrEqual(parsedDate, otherParsedDate) {
+          var isYearGreater = (
+            parsedDate.year >
+            otherParsedDate.year
+          ),
+              isMonthGreater = (
+            parsedDate.month >
+            otherParsedDate.month
+          ),
+              isDayGreater = (
+            parsedDate.day >
+            otherParsedDate.day
+          ), 
+          
+              isYearSame = (
+            parsedDate.year ==
+            otherParsedDate.year
+          ),
+              isMonthSame = (
+            parsedDate.month ==
+            otherParsedDate.month
+          ),
+              isDaySame = (
+            parsedDate.day ==
+            otherParsedDate.day
+          );
+          
+          if(isYearGreater) {
+            return true;
+          } else if(isYearSame) {
+          
+           if(isMonthGreater) {
+              return true;
+           } else if(isMonthSame) {
+           
+              if(isDayGreater) {
+                return true;
+              } else return isDaySame;
+              
+           } else return false;
+           
+          } else return false;
+        }
+        
+        function myParse(str) {
+          return (splat => 
+            splat.length == 3 &&
+            !splat.find(x => isNaN(x)) ? 
+            Object.fromEntries(
+              (list => splat
+                .map((x, i) => (
+                  [list[i], parseInt(x)]
+                ))
+              )([
+                "day", "month", 
+                "year"
+              ])
+            ) : null
+          )(
+            typeof(str) == "string" ? 
+              str.split("-")
+            : []
+          )
+        }
+      }
+</script>
+
 </div>
 {% endblock %}

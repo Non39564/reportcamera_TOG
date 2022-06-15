@@ -1,0 +1,31 @@
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ['Year', 'Amount Employee'],
+      {% if datasum %}
+      {% for datasum in datasum %}
+      ['{{datasum.date}}',  {{datasum.ss}}],
+      {% endfor %}
+      
+      {% endif %}
+      
+    ]);
+
+    var options = {
+      title: 'Employee Performance',
+      curveType: 'function',
+      legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+    chart.draw(data, options);
+  }
+
+  $(window).resize(function(){
+    drawChart()
+  });
+</script>

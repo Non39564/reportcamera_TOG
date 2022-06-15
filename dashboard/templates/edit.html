@@ -1,5 +1,33 @@
 {% extends 'components/base.html' %}
 {% block tital%} Edit | {% endblock %}
 {% block content %}
-
+<div class="wrapper">
+    {% if id %}
+    <form class="form-signin" style="text-align: center;" action="/saveEdit" method="post">  
+    {% csrf_token %}     
+      <h2 class="form-signin-heading">Edit</h2>
+      <input type="hidden" name="id" value="{{id}}">
+      <input type="text" class="form-control" name="name" placeholder="Name" required="" autofocus="" value="{{name}}"/><br>
+      <input type="text" class="form-control" name="Company" placeholder="Company" required="" value="{{Company}}"/><br>
+      <input type="text" class="form-control" name="date" placeholder="Date" required="" value="{{date}}"/><br>
+      <input type="text" class="form-control" name="time_in" placeholder="Time In" required="" value="{{time_in}}"/><br>    
+      <input type="text" class="form-control" name="time_out" placeholder="Time Out" required="" value="{{time_out}}"/><br>   
+      <br>
+      <tr>
+        <td>  
+          <button class="btn btn-lg btn-danger " type="submit">Update</button>
+          <button class="btn btn-lg btn-success " type="button" onclick="history.back()">Cancel</button>
+    </form>
+        <!-- <form class="form-signin" style="text-align: center;" action="/">       
+            
+        </form> -->
+        <form>
+        {% csrf_token %}
+          </form>
+      </td>
+      </tr>
+      
+    
+    {% endif %}
+  </div>
 {% endblock %}

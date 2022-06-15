@@ -1,0 +1,23 @@
+pip install mysql-connector-python
+
+
+SELECT id, date, name,count(name) ss from dashboard_DataCamera group by date, Company order by date
+
+
+SET @sql = NULL;
+SELECT
+GROUP_CONCAT(DISTINCT CONCAT(
+  'SUM(
+  CASE WHEN name = "', name, '" THEN stack ELSE 0 END) 
+  AS ', name)
+)
+INTO @sql
+FROM dashboard_datacamera;
+ 
+SET @sql = CONCAT('SELECT date, ', @sql, 
+  ' FROM dashboard_datacamera GROUP BY date');
+SELECT @sql;
+ 
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;

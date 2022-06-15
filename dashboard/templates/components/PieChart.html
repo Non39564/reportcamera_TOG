@@ -1,0 +1,32 @@
+<script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ['Name', 'count'],
+        {% if datapie %}
+        {% for datapie in datapie%}
+        ['{{datapie.name}}', {{datapie.c}}],
+        {% endfor %} 
+        {% endif %}
+      ]);
+
+      var options = {
+        title: 'Total count name',
+        legend: 'none',
+        pieSliceText: 'label',
+        slices: {  4: {offset: 0.2},
+                  12: {offset: 0.3},
+                  14: {offset: 0.4},
+                  15: {offset: 0.5},
+        },
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+      chart.draw(data, options);
+    }
+
+    $(window).resize(function(){
+      drawChart()
+    });
+  </script>
