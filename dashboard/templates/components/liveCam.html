@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %} -->
 <div id="content">
     <!-- Begin Page Content -->
     <div class="container-fluid">
@@ -8,6 +8,21 @@
                 <h6 class="m-0 font-weight-bold text-primary">Camera Live</h6>
             </div>
             <div class="card-body">
+
+                <div id="container" align="center">
+  
+                    <br>
+                    
+                    <video style="background: black url(loader.gif) center no-repeat;" id="remoteVideo" width="800" height="450" autoplay="" playsinline="" muted="" controls=""></video>
+                
+                    <script type="text/javascript">
+                
+                        webrtcPlayer = new UnrealWebRTCPlayer("remoteVideo", "livecam", "", "193.168.56.1", "5119", false, true, "tcp");
+                
+                        webrtcPlayer.Play();    
+                    </script>
+                
+                  </div>
                 
             </div>
         </div>

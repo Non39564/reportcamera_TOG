@@ -21,3 +21,8 @@ SELECT @sql;
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
+
+
+statistics = SELECT name, COUNT(name) as value FROM dashboard_datacamera GROUP By name ORDER BY value DESC
+
+unknown = SELECT Company, name, date, time_in, time_out, image FROM dashboard_datacamera WHERE name = 'unknown' ORDER by date, time_in DESC

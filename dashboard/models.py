@@ -7,4 +7,5 @@ class DataCamera(models.Model):
     time_in = models.CharField(max_length=255, null=True, blank=True)
     time_out = models.CharField(max_length=255, null=True, blank=True)
     stack = models.IntegerField()
-    image_name = models.CharField(max_length=255)
+    image = models.BinaryField()
+    status = models.IntegerField()

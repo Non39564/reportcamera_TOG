@@ -1,5 +1,6 @@
 {% extends 'components/base.html' %}
-{% block tital%} Table | {% endblock %}
+{% load static %}
+{% block tital%} Unknown | {% endblock %}
 {% block content %}
 <!-- Data_Table -->
 <div>
@@ -22,18 +23,6 @@
                 <div class="table-responsive">
                     <!-- Topbar Search -->
                     <div>
-                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group">
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for name"
-                                    aria-label="Search" aria-describedby="basic-addon2" id="searchname" onkeyup="Search()">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary">
-                                        <i class="fas fa-search fa-sm"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                        <hr>
                         <div class="input-group">
                             <input id="dateStart" type="date" >
                             <input id="dateEnd" type="date" >
@@ -44,43 +33,31 @@
                     </div>
                     <br>
                     <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
-                    {% if data %}
+                    {% if imgdata %}
                         <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Company</th>
                                 <th>Name</th>
                                 <th>Date</th>
                                 <th>Time_In</th>
                                 <th>Time_Out</th>
-                                <th colspan="2">Action</th> 
                             </tr>
                         </thead>
                         <tbody>
                             
-                            {% for data in data%}
+                            {% for imgdata in imgdata %}
                             <tr>
-                                <td>{{data.Company}}</td>
-                                <td>{{data.name}}</td>
-                                <td>{{data.date}}</td>
-                                <td>{{data.time_in}}</td>
-                                <td>{{data.time_out}}</td>
-                                <td>   
-                                    <form action="/Edit" method="post">
-                                    {% csrf_token %}
-                                        <input type="hidden" name="id" value="{{data.id}}">
-                                        <input type="hidden" name="name" value="{{data.name}}">
-                                        <button class="btn btn-primary" type="submit" >Edit</button>
-                                    </form>
-                                  </td>
-                                  <td>
-
-                                    <form action="/delete" method="post">
-                                    {% csrf_token %}
-                                        <input type="hidden" name="id" value="{{data.id}}">
-                                        <input type="hidden" name="name" value="{{data.name}}">
-                                        <button type="submit" class="btn btn-danger" >Delete</button>
-                                    </form>
+                                <td>
+                                    {% for image in images %}
+                                    <img  src="{{MEDIA_URL}}static/dashboard/img/unknown/{{image}}" width="200px" height="150px">
+                                    {% endfor %}
                                 </td>
+                                <td>{{imgdata.Company}}</td>
+                                <td>{{imgdata.name}}</td>
+                                <td>{{imgdata.date}}</td>
+                                <td>{{imgdata.time_in}}</td>
+                                <td>{{imgdata.time_out}}</td>
                             </tr>
                             {% endfor %}
                             
@@ -98,7 +75,6 @@
 
 </div>
 <!-- End of Main Content -->
-
 <!-- Date Search script -->
 <script>
     doIt.onclick = () => {
@@ -112,7 +88,7 @@
       function sortThroughTable(start, end) {
         Array.apply(0, dataTable.rows).forEach(x => {
           var cells = Array.apply(0, x.cells);
-          var secondCell = cells[2].innerText;
+          var secondCell = cells[3].innerText;
           var isHidden = shouldItBeHidden(
             secondCell,
             start, end

@@ -7,5 +7,7 @@ urlpatterns = [
     path('Edit',views.Edit, name="Edit"),
     path('saveEdit',views.saveEdit, name="saveEdit"),
     path('delete',views.delete, name="delete"),
+    path('Unknown',views.Unknown, name="Unknown"),
+    path('Statistics',views.Statistics, name="Statistics"),
 ]
 

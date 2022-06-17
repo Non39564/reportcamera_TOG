@@ -1,0 +1,72 @@
+{% extends 'components/base.html' %}
+{% block tital%} Statistics | {% endblock %}
+{% block content %}
+<!-- Data_Table -->
+<div>
+    <div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+            For more information about DataTables, please visit the <a target="_blank"
+                href="https://datatables.net">official DataTables documentation</a>.</p>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <!-- Topbar Search -->
+                    <div>
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for name"
+                                    aria-label="Search" aria-describedby="basic-addon2" id="searchname" onkeyup="Search()">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <br>
+                    <table class="table table-bordered " id="dataTable" width="100%" cellspacing="0">
+                    {% if data %}
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Name</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for data in data%}
+                            <tr>
+                                <td>{{data.Company}}</td>
+                                <td>{{data.name}}</td>
+                                <td>{{data.value}}</td>
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                        {% else %}
+                            <p>ไม่มีข้อมูลที่จะแสดง</p>
+                            {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+</div>
+{% endblock %}
